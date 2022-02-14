@@ -1,0 +1,84 @@
+<div *ngIf="cuenta === true">
+    <ul class="nav">
+    
+        <li class="nav-item">
+          <a class="nav-link disabled">Selecciona una cuenta</a>
+        </li>
+    </ul>
+    <ol class="list-group list-group-numbered" *ngIf="cuentasPorBanco">
+        <li 
+        class="list-group-item d-flex justify-content-between align-items-start list-group-item-action" 
+        *ngFor="let cuenta of cuentasPorBanco.cuentas" 
+        (click)="operacion(cuenta)"
+        >
+          <div class="ms-2 me-auto">
+            <div class="fw-bold">{{cuenta.bc_nombre}}</div>
+            {{cuenta.cnt_saldo | currency:'USD'}}
+          </div>
+          <span class="badge bg-primary rounded-pill">{{cuenta.cnt_numero}}</span>
+        </li>
+    </ol>
+</div>
+
+<div class="login-root" *ngIf="retiro === true">
+    <div class="box-root flex-flex flex-direction--column" style="min-height: 100vh;flex-grow: 1;">
+      <div class="box-root padding-top--24 flex-flex flex-direction--column" style="flex-grow: 1; z-index: 9;">
+        <div class="formbg-outer">
+          <div class="formbg">
+            <div class="formbg-inner padding-horizontal--48">
+              <span class="padding-bottom--15">Ingrese el valor del retiro</span>
+              <form [formGroup]="form" id="stripe-login">
+                <div class="field padding-bottom--24">
+                  <input type="number" aria-label="valor" formControlName="valor">
+                </div>
+                <div class="field padding-bottom--24">
+                    <button type="button" [disabled]="!form.valid" class="btn" (click)="continuar()">Continuar</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>
+
+<div *ngIf="otraCuenta === true">
+    <ul class="nav">
+    
+        <li class="nav-item">
+          <a class="nav-link disabled">Selecciona la cuenta a transferir</a>
+        </li>
+    </ul>
+    <ol class="list-group" *ngFor="let cuenta of cuentasPorBanco.cuentas" >
+        <li 
+        class="list-group-item d-flex justify-content-between align-items-start list-group-item-action"
+        (click)="transferir(cuenta)"
+        *ngIf="Cuenta1.cnt_numero != cuenta.cnt_numero"
+        >
+          <div class="ms-2 me-auto">
+            <div class="fw-bold">{{cuenta.bc_nombre}}</div>
+            {{cuenta.cnt_saldo | currency:'USD'}}
+          </div>
+          <span class="badge bg-primary rounded-pill">{{cuenta.cnt_numero}}</span>
+        </li>
+    </ol>
+</div>
+
+<div class="login-root" *ngIf="operacionConrrecta === true">
+    <div class="box-root flex-flex flex-direction--column" style="min-height: 100vh;flex-grow: 1;">
+      <div class="box-root padding-top--24 flex-flex flex-direction--column" style="flex-grow: 1; z-index: 9;">
+        <div class="box-root padding-top--48 padding-bottom--24 flex-flex flex-justifyContent--center">
+            <h1>Operación realizada con exito</h1>
+        </div>
+        <div class="formbg-outer">
+          <div class="formbg">
+            <div class="formbg-inner padding-horizontal--48">              
+              <div class="field padding-bottom--24">
+                <button type="button" class="btn" (click)="otraOperaciones()">Realizar Otra Operación</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</div>

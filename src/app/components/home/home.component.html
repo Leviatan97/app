@@ -1,0 +1,2 @@
+<app-select-type (indicarTipo)="goTo($event)" *ngIf="IsOperation === false"></app-select-type>
+<app-operations *ngIf="IsOperation === true" [tipoOperacion]="tipoOperacion" (otraOperacion)="goBack($event)"></app-operations>
